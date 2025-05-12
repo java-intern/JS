@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure Image Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f8f9fa;
+    }
+
+    .gallery {
+      display: none;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 10px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .password-container {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: deeppink;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="password-container" id="passwordContainer">
+  <input type="password" id="password" placeholder="Enter password">
+  <button onclick="checkPassword()">Enter</button>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<script>
+  const CORRECT_PASSWORD = "bavabarrey";
+
+  function checkPassword() {
+    const entered = document.getElementById("password").value;
+    if (entered === CORRECT_PASSWORD) {
+      document.getElementById("passwordContainer").style.display = "none";
+      document.getElementById("gallery").style.display = "grid";
+      loadImages();
+    } else {
+      alert("Incorrect password.");
+    }
+  }
+
+  function loadImages() {
+    const gallery = document.getElementById("gallery");
+    for (let i = 1; i <= 30; i++) {
+      const img = document.createElement("img");
+      const num = i < 10 ? `0${i}` : i;
+      img.src = `${num}.jpg`;
+      img.alt = `Image ${num}`;
+      img.onerror = function() {
+        img.style.display = 'none'; // Hide if not found
+      };
+      gallery.appendChild(img);
+    }
+  }
+</script>
+
+</body>
+</html>
