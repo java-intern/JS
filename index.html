@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Secure Gallery</title>
+  <style>
+    body {
+      background-color: #fef6f9;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #e91e63;
+      margin: 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    #locked {
+      color: red;
+      margin-top: 50px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💗 Hi Bujji Kothi 💗</h1>
+  <p id="locked">Access Denied. Reload to try again.</p>
+  <div class="gallery" id="gallery" style="display: none;"></div>
+
+  <script>
+    const password = prompt("Enter gallery password:");
+    const correctPassword = "bavabarrey"; // You can change this
+
+    if (password === correctPassword) {
+      const gallery = document.getElementById("gallery");
+      gallery.style.display = "grid";
+
+      for (let i = 1; i <= 30; i++) {
+        const img = document.createElement("img");
+        const filename = i.toString().padStart(2, '0') + ".jpg";
+        img.src = filename;
+        img.alt = `Image ${filename}`;
+        img.onerror = function() {
+          this.style.display = "none"; // hide if image not found
+        };
+        gallery.appendChild(img);
+      }
+    } else {
+      document.getElementById("locked").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
