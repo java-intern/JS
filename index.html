@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      text-align: center;
+    }
+    .password-box {
+      padding: 50px;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      display: none;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #errorMessage {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="password-box" id="passwordBox">
+    <h2>Enter Password to View Gallery</h2>
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="checkPassword()">Submit</button>
+    <p id="errorMessage" style="display: none;">Incorrect Password</p>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <script>
+    const correctPassword = 'love123'; // Change your password here
+
+    function checkPassword() {
+      const entered = document.getElementById('password').value;
+      if (entered === correctPassword) {
+        document.getElementById('passwordBox').style.display = 'none';
+        document.getElementById('gallery').style.display = 'grid';
+        loadImages();
+      } else {
+        document.getElementById('errorMessage').style.display = 'block';
+      }
+    }
+
+    function loadImages() {
+      const gallery = document.getElementById('gallery');
+      const username = 'java-intern'; // 👈 Replace with your GitHub username
+      const repo = 'JS'; // 👈 Replace with your GitHub repo name
+      const path = 'main'; // 👈 Or use 'master' if your default branch is master
+
+      for (let i = 1; i <= 30; i++) {
+        const imgNum = i.toString().padStart(2, '0');
+        const img = document.createElement('img');
+        img.src = `https://raw.githubusercontent.com/${username}/${repo}/${path}/${imgNum}.jpg`;
+        img.onerror = () => img.remove(); // Remove if not found
+        gallery.appendChild(img);
+      }
+    }
+  </script>
+
+</body>
+</html>
